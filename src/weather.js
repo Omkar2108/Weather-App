@@ -24,7 +24,7 @@ class weathernew extends Component {
     }
 
     handleGet=(e)=>{
-            axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&appid=${API_KEY}&units=metric`)
+            axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&appid=${API_KEY}&units=metric`)
     .then((res)=>{
         // res=JSON.stringify(res);
         // console.log(res["data"]["main"]["temp"]);
