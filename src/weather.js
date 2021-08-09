@@ -24,7 +24,6 @@ class weathernew extends Component {
     }
 
     handleGet=(e)=>{
-        if(e.key==="Enter"){
             axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&appid=${API_KEY}&units=metric`)
     .then((res)=>{
         // res=JSON.stringify(res);
@@ -50,14 +49,6 @@ class weathernew extends Component {
     }).catch((err)=>{
         console.log(err);
     })
-        }
-        else{
-            this.setState({error:true});
-            setTimeout(()=>{
-                this.setState({error:false});
-            }, 2000);
-            
-        }
     }
 
     render() {
