@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './weather.css';
-// import Map from './map';
 
-const API_KEY="b21162b7c2cf10f1d77bbb5b7cd701f4";
-class weathernew extends Component {
+// const API_KEY="b21162b7c2cf10f1d77bbb5b7cd701f4";
+
+export default class Weather extends Component {
     constructor(props) {
         super(props);
         this.state={
@@ -14,23 +14,21 @@ class weathernew extends Component {
             humidity:undefined,
             rainPercentage:undefined,
             description:undefined,
-            city:undefined,
+            city:"",
             sunrise:undefined,
             sunset:undefined,
             icon:undefined,
             name:undefined,
             country:undefined,
+            error:true
         }
     }
-
-    handleGet=(e)=>{
-            axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&appid=${API_KEY}&units=metric`)
+    Api_key=process.env.REACT_APP_API_KEY;
+    handleGet=()=>{
+      if(this.state.city!=="" && (this.state.city).length > 2 && this.state.error){
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&appid=${this.Api_key}&units=metric`)
     .then((res)=>{
-        // res=JSON.stringify(res);
-        // console.log(res["data"]["main"]["temp"]);
         // console.log(res);
-        // console.log(res["data"]["main"])
-
 
         this.setState({
             temp:res.data.main.temp,
@@ -45,10 +43,16 @@ class weathernew extends Component {
             name:res.data.name,
             country:res.data.sys.country,
         });
-        // console.log(this.state);
+
     }).catch((err)=>{
-        console.log(err);
+        // console.log(err);
+        alert("Enter Valid City");
+        this.setState({
+          error:false
+        })
+        document.getElementById("search").value="";
     })
+      }
     }
 
     render() {
@@ -58,10 +62,17 @@ class weathernew extends Component {
       <main>
         <div className="search-box">
           <input 
+            id="search"
             type="text"
             className="search-bar"
             placeholder="Search..."
-            onChange={e => this.setState({city:e.target.value})}
+            value={this.state.city}
+            onChange={e => {
+              this.setState({city:e.target.value})
+              this.setState({
+                error:true
+              })
+            }}
             onKeyPress={(e)=>this.handleGet(e)}
           />
         </div>
@@ -113,11 +124,3 @@ class weathernew extends Component {
         );
     }
 }
-
-weathernew.propTypes = {
-
-};
-
-export default weathernew;
-
-
