@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './weather.css';
 
-// const API_KEY="b21162b7c2cf10f1d77bbb5b7cd701f4";
 
 export default class Weather extends Component {
     constructor(props) {
@@ -22,7 +21,7 @@ export default class Weather extends Component {
             country:undefined
         }
     }
-    Api_key=process.env.REACT_APP_API_KEY;
+    Api_key="b21162b7c2cf10f1d77bbb5b7cd701f4";
     handleGet=()=>{
       if(this.state.city!=="" && (this.state.city).length > 2){
         axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&appid=${this.Api_key}&units=metric`)
