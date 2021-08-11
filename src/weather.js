@@ -19,13 +19,12 @@ export default class Weather extends Component {
             sunset:undefined,
             icon:undefined,
             name:undefined,
-            country:undefined,
-            error:true
+            country:undefined
         }
     }
     Api_key=process.env.REACT_APP_API_KEY;
     handleGet=()=>{
-      if(this.state.city!=="" && (this.state.city).length > 2 && this.state.error){
+      if(this.state.city!=="" && (this.state.city).length > 2){
         axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.state.city}&appid=${this.Api_key}&units=metric`)
     .then((res)=>{
         // console.log(res);
@@ -46,11 +45,6 @@ export default class Weather extends Component {
 
     }).catch((err)=>{
         // console.log(err);
-        alert("Enter Valid City");
-        this.setState({
-          error:false
-        })
-        document.getElementById("search").value="";
     })
       }
     }
@@ -66,12 +60,8 @@ export default class Weather extends Component {
             type="text"
             className="search-bar"
             placeholder="Search..."
-            value={this.state.city}
             onChange={e => {
               this.setState({city:e.target.value})
-              this.setState({
-                error:true
-              })
             }}
             onKeyPress={(e)=>this.handleGet(e)}
           />
